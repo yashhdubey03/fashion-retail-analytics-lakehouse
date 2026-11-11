@@ -238,28 +238,7 @@ The generated dataset produced the following illustrative business metrics:
 
 These figures demonstrate how the different datasets can be transformed into useful business metrics, from tracking revenue and product performance to understanding customer value and marketing efficiency.
 
-## 8. Repository Structure
-
-```text
-fashion-retail-analytics-lakehouse/
-│
-├── 00_project_setup/
-├── 01_data_generation/
-├── 02_bronze_ingestion/
-├── 03_silver_transformations/
-├── 04_gold_analytics/
-├── 05_sql_analytics/
-├── 06_data_quality/
-├── 07_dashboards/
-├── 08_performance_optimization/
-├── 09_orchestration/
-│
-├── screenshots/
-│
-└── README.md
-```
-
-## 9. What I Learned
+## 8. What I Learned
 
 Building this project gave me practical experience working with Databricks beyond writing individual SQL queries.
 
@@ -269,7 +248,7 @@ It also gave me an opportunity to apply SQL concepts to actual business question
 
 Finally, building the dashboards helped me think about how analytical results should be presented to different stakeholders, rather than simply producing tables of numbers.
 
-## 10. Project Information
+## 9. Project Information
 
 **Project:** Fashion Retail Analytics Lakehouse  
 **Business:** NOVA THREADS (Fictional)  
