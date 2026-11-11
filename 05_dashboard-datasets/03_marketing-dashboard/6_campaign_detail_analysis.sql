@@ -1,0 +1,22 @@
+SELECT
+    campaign_id,
+    campaign_name,
+    campaign_type,
+    marketing_channel,
+    campaign_objective,
+    target_segment,
+    campaign_status,
+    start_date,
+    end_date,
+    campaign_budget,
+    actual_spend,
+    impressions,
+    customers_reached,
+    clicks,
+    conversions,
+    attributed_revenue,
+    click_through_rate,
+    conversion_rate,
+    return_on_ad_spend,
+    cost_per_conversion
+FROM workspace.fashion_gold.campaign_performance;
