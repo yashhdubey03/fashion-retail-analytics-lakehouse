@@ -21,9 +21,8 @@ The project explores how data from different areas of a retail business can be b
 5. [SQL Analytics](#5-sql-analytics)
 6. [Interactive Dashboards](#6-interactive-dashboards)
 7. [Key Results](#7-key-results)
-8. [Repository Structure](#8-repository-structure)
-9. [What I Learned](#9-what-i-learned)
-10. [Project Information](#10-project-information)
+8. [What I Learned](#9-what-i-learned)
+9. [Project Information](#10-project-information)
 
 ---
 
