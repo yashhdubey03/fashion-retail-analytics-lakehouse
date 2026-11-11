@@ -6,62 +6,70 @@
 ![Delta Lake](https://img.shields.io/badge/Delta%20Lake-Storage-purple)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
 
-An end-to-end retail analytics project built using **Databricks, PySpark, Delta Lake and SQL**, simulating the data ecosystem of a fictional Indian fashion retailer, NOVA THREADS.
+An end-to-end retail analytics project built using **Databricks, PySpark, Delta Lake and SQL**, based on a fictional Indian fashion retailer called NOVA THREADS.
 
-The project transforms programmatically generated retail data into structured, business-ready analytical datasets through a Bronze-Silver-Gold lakehouse architecture. It covers data generation, ETL transformations, data validation, SQL analytics, customer segmentation and interactive business dashboards.
+The project explores how data from different areas of a retail business can be brought together, cleaned, transformed and analysed to understand business performance. It covers the complete journey from generating synthetic datasets and building a lakehouse architecture to writing analytical SQL queries and developing interactive dashboards.
 
----
+## 1. Project Overview
 
-## 1. Business Context
+NOVA THREADS is a fictional fashion retailer operating through a website and mobile application across Mumbai, Pune, Delhi and Bengaluru.
 
-NOVA THREADS is a fictional fashion retail business operating through a website and mobile application across Mumbai, Pune, Delhi and Bengaluru.
+Like most retail businesses, its operations generate data across multiple areas, including customer registrations, product catalogues, inventory, orders and marketing campaigns. Looking at these datasets independently makes it difficult to understand the bigger picture.
 
-As the business expands, different operational areas generate large volumes of customer, product, transaction, inventory and marketing data. Analysing these independently makes it difficult to understand sales performance, customer purchasing behaviour, product demand and marketing effectiveness.
+The goal of this project was to bring these different datasets into one analytical environment and use them to answer practical business questions.
 
-**Project Objective:** Build a centralised analytics solution that consolidates these datasets, prepares reliable analytical tables and provides business stakeholders with actionable insights through SQL and interactive dashboards.
+Some of the questions explored include:
+- Which products, categories and brands contribute the most revenue?
+- How does sales performance change over time?
+- Which customer segments generate the highest revenue?
+- How frequently do customers return to make purchases?
+- Which marketing channels and campaign types perform better?
+- Which warehouses have products that need replenishment?
 
-### Project Highlights
+### What the project covers
 
-- Generated approximately **850,000 synthetic records** across six datasets.
-- Implemented a three-layer Bronze-Silver-Gold lakehouse architecture.
-- Developed PySpark transformations with business-rule and data quality validations.
-- Built RFM-based customer segmentation and cohort retention analysis.
-- Developed 10 SQL queries using CTEs, window functions and analytical aggregations.
-- Created three interactive Databricks AI/BI dashboards covering sales, customers and marketing.
+- Approximately 850,000 programmatically generated records across six datasets.
+- Bronze, Silver and Gold lakehouse architecture using Delta tables.
+- PySpark-based data cleaning, transformations and validation.
+- Customer segmentation using RFM analysis.
+- 10 analytical SQL queries covering different business areas.
+- Three interactive Databricks AI/BI dashboards.
 
 ## 2. Technology Stack
 
-| Technology | Application |
+| Technology | How it was used |
 |---|---|
-| Databricks | Lakehouse development and analytics |
-| PySpark | Synthetic data generation and ETL |
-| Python | Data generation and processing |
-| Delta Lake | Structured, managed table storage |
-| SQL | Business analysis and reporting |
-| Databricks AI/BI | Interactive dashboards |
-| GitHub | Source control and documentation |
+| Databricks | Development environment for the lakehouse and analytics |
+| Python | Programmatic generation of synthetic retail data |
+| PySpark | Data transformations, cleaning and aggregations |
+| Delta Lake | Storage of structured datasets across lakehouse layers |
+| SQL | Business analysis and analytical queries |
+| Databricks AI/BI | Interactive dashboards and visual reporting |
+| GitHub | Project version control and documentation |
 
-## 3. Data Overview
+## 3. Data Generation
 
-To simulate a realistic fashion retail environment without relying on external or proprietary datasets, all six datasets were generated programmatically using Python and PySpark.
+Instead of relying on an existing retail dataset, I generated the data programmatically using Python and PySpark. This made it possible to control the structure, relationships and distributions of the data while simulating different aspects of a fashion retail business.
 
-The generated data includes customer demographics, product attributes, warehouse inventory, order transactions, individual order items and marketing campaign performance.
+The six datasets cover the following areas:
 
-| Dataset | Records |
-|---|---:|
-| Customers | 100,000 |
-| Products | 10,000 |
-| Inventory | 40,000 |
-| Orders | 200,000 |
-| Order Items | 499,765 |
-| Marketing Campaigns | 200 |
-| **Total** | **849,965** |
+| Dataset | Records | Description |
+|---|---:|---|
+| Customers | 100,000 | Customer profiles, demographics and acquisition details |
+| Products | 10,000 | Product categories, brands, sizes, colours and prices |
+| Inventory | 40,000 | Product stock levels across four warehouses |
+| Orders | 200,000 | Order dates, channels, payment methods and transaction details |
+| Order Items | 499,765 | Individual products and quantities within each order |
+| Marketing Campaigns | 200 | Campaign budgets, spending, impressions and performance metrics |
+| **Total** | **849,965** | |
 
-The datasets include realistic categorical distributions, transaction amounts, dates, customer attributes, product categories, order statuses and campaign metrics.
+The generated data includes different customer profiles, product attributes, transaction patterns, order statuses and marketing metrics. Guest checkout is also represented, allowing the analysis to account for orders that are not associated with registered customers.
 
-## 4. Lakehouse Architecture
+All business entities and figures are fictional and intended for analytical practice.
 
-The project follows the Medallion Architecture, separating raw data storage, data refinement and business-level analytics into three logical layers.
+## 4. Lakehouse Implementation
+
+The data is organised using the Medallion Architecture, with separate Bronze, Silver and Gold layers. Each layer has a specific purpose, allowing raw datasets to be progressively transformed into reliable, business-ready information.
 
 ```mermaid
 flowchart TD
@@ -72,155 +80,149 @@ flowchart TD
     E --> F["Executive Sales Dashboard"]
     E --> G["Customer Analytics Dashboard"]
     E --> H["Marketing Campaign Dashboard"]
-
-    B --- B1["6 Raw Delta Tables"]
-    C --- C1["6 Cleaned Delta Tables"]
-    D --- D1["Business-ready Analytics Tables"]
 ```
 
-### 4.1 Bronze Layer – Raw Data Ingestion
+### Bronze Layer – Raw Data Storage
 
-**Situation:** The simulated retail business requires a structured storage layer to retain its generated operational datasets before applying business transformations.
+The Bronze layer is where the six generated datasets were first stored in Databricks.
 
-**Task:** Establish a centralised landing and storage layer for six independently generated datasets.
+Separate notebooks were created for data generation and ingestion, with the datasets organised as managed Delta tables under the `fashion_bronze` schema.
 
-**Action:** Generated customer, product, inventory, order, order-item and marketing campaign data using Python and PySpark. Stored the datasets as managed Delta tables in the `fashion_bronze` schema using Databricks notebooks. Also explored CSV-based ingestion separately as an ingestion workflow demonstration.
+At this stage, the focus was on preserving the generated data in a structured format so that subsequent transformations could be performed independently.
 
-**Result:** Established six Bronze Delta tables containing 849,965 records, providing a consistent starting point for downstream transformations.
+The result was six Bronze tables containing 849,965 records across customers, products, inventory, orders, order items and marketing campaigns.
 
-### 4.2 Silver Layer – Data Cleaning and Validation
+### Silver Layer – Data Cleaning and Transformation
 
-**Situation:** Raw operational data may contain inconsistent text formats, invalid values, missing fields and transaction-level inconsistencies.
+The Silver layer focuses on making the raw datasets consistent and suitable for analysis.
 
-**Task:** Prepare clean and reliable datasets while preserving legitimate business scenarios.
+I developed separate PySpark notebooks for each dataset, covering standardisation, data validation and business-rule checks.
 
-**Action:** Developed six PySpark transformation notebooks to standardise categorical fields, clean text values, validate dates and numeric fields, check duplicates and enforce business rules.
+Some of the transformations included:
+- Standardising text fields, categorical values, dates and identifiers.
+- Validating customer ages, email formats and registration dates.
+- Checking product prices and inventory stock levels.
+- Reconciling order amounts and validating transaction details.
+- Verifying order-item calculations, including gross amounts, discounts and net values.
+- Checking marketing campaign metrics, including impressions, clicks, conversions and calculated KPIs.
 
-Key validation activities included:
+I also accounted for legitimate business scenarios rather than treating every exception as bad data. For example, guest orders were retained even when customer IDs were missing, and repeated order-product combinations were preserved when they represented separate line items.
 
-- Customer age, email and registration-date validation.
-- Product pricing and category-specific checks.
-- Inventory stock and reorder-level validation.
-- Order amount reconciliation and order-status validation.
-- Order-item gross, discount and net amount verification.
-- Marketing campaign funnel and KPI validation.
+After the transformations, all six Silver datasets were saved as managed Delta tables. The implemented validation checks reported zero invalid records across the tested business rules.
 
-Legitimate guest orders with missing customer IDs and repeated order-product line items were preserved rather than incorrectly removed.
+### Gold Layer – Business-Ready Analytics
 
-**Result:** Created six validated Silver Delta tables with zero invalid records across the implemented business-rule checks, while retaining valid transactional exceptions.
+With the data cleaned and validated, the Gold layer brings it together into datasets designed around specific business requirements.
 
-### 4.3 Gold Layer – Business Analytics
+Rather than repeatedly querying raw transactional data, I created aggregated and analytical tables that could be reused across SQL queries and dashboards.
 
-**Situation:** Cleaned operational datasets alone do not directly answer business questions. Stakeholders need aggregated metrics and analytical datasets organised around business functions.
-
-**Task:** Convert Silver data into reusable datasets for sales, product, customer, inventory and marketing analysis.
-
-**Action:** Developed PySpark aggregation and analytical workflows to create business-ready Gold tables.
-
-| Business Area | Gold Tables | Purpose |
+| Business Area | Analytical Tables | What they cover |
 |---|---|---|
 | Sales | `daily_sales_performance` | Daily revenue, orders, discounts and units sold |
-| Products | `category_performance`, `brand_performance`, `product_performance` | Category, brand and product-level performance |
-| Customers | `customer_analytics`, `customer_segment_summary` | Customer-level RFM metrics and segment summaries |
-| Inventory | `inventory_analytics`, `inventory_replenishment` | Warehouse stock health and replenishment priorities |
-| Marketing | `campaign_performance`, `campaign_channel_performance`, `campaign_type_performance`, `campaign_objective_performance`, `campaign_segment_performance`, `campaign_overview` | Campaign performance across business dimensions |
+| Products | `category_performance`, `brand_performance`, `product_performance` | Revenue and sales performance at category, brand and product levels |
+| Customers | `customer_analytics`, `customer_segment_summary` | Customer purchasing behaviour, RFM scores and segment-level metrics |
+| Inventory | `inventory_analytics`, `inventory_replenishment` | Warehouse stock health and products requiring replenishment |
+| Marketing | `campaign_performance`, `campaign_channel_performance`, `campaign_type_performance`, `campaign_objective_performance`, `campaign_segment_performance`, `campaign_overview` | Campaign results across channels, campaign types, objectives and target segments |
 
-**Result:** Established reusable Gold Delta tables that support SQL analysis and interactive dashboards without repeatedly processing raw operational datasets.
+The customer analytics workflow also includes RFM segmentation, using recency, frequency and monetary value to group customers into categories such as Champions, Loyal Customers, At Risk and Hibernating.
+
+The resulting Gold tables provide a consistent foundation for the SQL analysis and dashboards developed later in the project.
 
 ## 5. SQL Analytics
 
-**Objective:** Translate business questions into analytical SQL queries using the Gold layer as the primary source.
+Once the Gold tables were ready, I moved to Databricks SQL to explore the business questions in more detail.
 
-Developed 10 SQL queries in Databricks SQL, applying CTEs, window functions, conditional aggregations, ranking and date-based analysis.
+I developed 10 individual queries, each focusing on a different area of retail performance. These queries go beyond basic aggregations and use CTEs, window functions, ranking, date calculations and conditional logic.
 
-| No. | Query | Business Question and Analysis |
+| No. | Analysis | What it explores |
 |---:|---|---|
-| 01 | Daily Sales Performance | Examines daily revenue, order volumes and units sold to understand overall sales activity and identify changes in performance. |
-| 02 | Top Performing Products | Ranks products by net revenue to identify the highest-contributing products and their associated sales volumes. |
-| 03 | Monthly Sales Trends | Uses monthly aggregation, `LAG()` and rolling three-month averages to evaluate month-over-month revenue changes and longer-term sales trends. |
-| 04 | Category Revenue Analysis | Compares category-level revenue, order volumes and units sold, including revenue contribution and ranking against other categories. |
-| 05 | Customer Segment Analysis | Evaluates customer segments using average recency, purchase frequency and monetary value to identify high-value and inactive customer groups. |
-| 06 | Customer Cohort Retention | Groups customers by their first purchase month and tracks subsequent monthly purchasing activity to analyse cohort retention patterns. |
-| 07 | Repeat Purchase Analysis | Classifies customers into one-time, repeat, frequent and loyal purchasing groups, comparing customer counts and lifetime revenue. |
-| 08 | Discount Analysis | Evaluates gross revenue, discounts and net revenue across discount bands to understand discount distribution and its relationship with revenue. |
-| 09 | Inventory Replenishment Analysis | Identifies low-stock and out-of-stock products across warehouses, estimating replenishment requirements and prioritising stock availability. |
-| 10 | Marketing Channel ROI Analysis | Compares marketing channels using blended ROAS, click-through rate, conversion volumes and cost per conversion to evaluate campaign efficiency. |
+| 01 | Daily Sales Performance | Examines daily revenue, order volumes and units sold to understand overall sales activity. |
+| 02 | Top Performing Products | Ranks products by net revenue to identify the highest-contributing products and compare their sales volumes. |
+| 03 | Monthly Sales Trends | Compares monthly revenue using `LAG()`, month-over-month growth and rolling three-month averages to identify changes in sales trends. |
+| 04 | Category Revenue Analysis | Compares category revenue, order volumes and revenue contribution to understand which product categories drive sales. |
+| 05 | Customer Segment Analysis | Evaluates customer segments using recency, frequency and monetary metrics to identify high-value and inactive groups. |
+| 06 | Customer Cohort Retention | Groups customers by their first purchase month and tracks subsequent monthly purchasing activity to understand retention patterns. |
+| 07 | Repeat Purchase Analysis | Groups customers into one-time, repeat, frequent and loyal purchasing segments and compares their contribution to revenue. |
+| 08 | Discount Analysis | Examines gross revenue, discount amounts and net revenue across different discount bands to understand discount distribution. |
+| 09 | Inventory Replenishment Analysis | Identifies low-stock and out-of-stock products across warehouses and evaluates recommended replenishment quantities. |
+| 10 | Marketing Channel ROI Analysis | Compares marketing channels using blended ROAS, click-through rates, conversions and cost per conversion. |
 
-**Key SQL concepts demonstrated:**
-- Common Table Expressions (CTEs)
-- Window functions: `LAG()`, `RANK()`, `NTILE()`
-- Rolling averages and month-over-month comparisons
-- Cohort analysis and retention calculations
-- Conditional aggregations and `CASE WHEN`
-- Revenue contribution and percentage calculations
+### SQL concepts used
+
+- CTEs for breaking complex queries into manageable steps.
+- Window functions such as `LAG()`, `RANK()` and `NTILE()`.
+- Rolling averages and month-over-month comparisons.
+- Cohort-based retention calculations.
+- Conditional aggregations using `CASE WHEN`.
+- Revenue contribution, percentage calculations and analytical rankings.
+
+Together, these queries provide a deeper look at the data behind the dashboards and demonstrate how SQL can be used to answer practical business questions.
 
 ## 6. Interactive Dashboards
 
-Three Databricks AI/BI dashboards were developed to present the analytical results through business-focused KPIs, visualisations, interactive filters and detailed performance tables.
+The final stage of the project was to turn the analytical datasets into interactive dashboards using Databricks AI/BI.
+
+I built three separate dashboards, each with its own layout and visual style based on the business area it covers. They combine KPI cards, charts, tables, tooltips and interactive filters so that users can explore the results rather than just view static reports.
 
 ### 6.1 Executive Sales Dashboard
 
-**Business Objective:** Provide an overview of the retailer's sales performance and identify the products and categories contributing most to revenue.
+**Purpose:** Give a quick overview of sales performance while allowing users to explore the products, categories and brands contributing to revenue.
 
-**Implementation:**
-- KPI cards for total revenue, total orders, units sold and average order value.
-- Monthly revenue trend to examine changes in sales performance over time.
-- Category revenue comparison to identify the strongest product categories.
-- Brand revenue share to compare revenue contribution across brands.
-- Top 10 products table to highlight the highest-revenue products.
+The dashboard starts with four key metrics: total revenue, total orders, units sold and average order value. These provide an immediate view of overall business performance.
 
-**Interactive Features:** Order date, product category and brand filters.
+Below the KPIs, the monthly revenue trend helps identify changes in sales over time. Category revenue and brand revenue share provide a comparison of the different product groups and brands, while the Top 10 Products table highlights the products generating the highest net revenue.
 
-**Business Value:** Helps stakeholders monitor sales performance, identify revenue-driving categories and brands, and understand which products contribute most to overall business revenue.
+**Interactive filters:** Order Date, Category and Brand.
 
-**Dashboard Preview:**
+**What it helps answer:** How is the business performing, which categories and brands contribute most to revenue, and which individual products are the strongest performers?
+
+**Dashboard Preview**
 
 ![Executive Sales Dashboard](screenshots/executive-sales-dashboard.png)
 
 ### 6.2 Customer Analytics Dashboard
 
-**Business Objective:** Understand customer distribution, purchasing behaviour and customer value to support segmentation and retention strategies.
+**Purpose:** Understand who the purchasing customers are, where they are located and how their purchasing behaviour differs.
 
-**Implementation:**
-- KPI cards for total customers, customer revenue and average customer spend.
-- Geographic point map showing customer distribution across four Indian cities.
-- Customer segment performance comparing revenue across seven RFM-based segments.
-- Age distribution to examine the demographic composition of purchasing customers.
-- Repeat purchase mix to distinguish one-time, repeat, frequent and loyal customers.
+The dashboard brings together customer and revenue KPIs with a geographic view of customer distribution across Mumbai, Pune, Delhi and Bengaluru.
 
-**Interactive Features:** City, gender and customer segment filters.
+The customer segment performance chart compares revenue across the seven RFM-based segments, making it easier to identify groups that contribute significantly to customer revenue.
 
-**Business Value:** Helps identify valuable customer groups, understand regional customer concentration and examine purchasing frequency, supporting more informed customer retention and engagement strategies.
+The age distribution chart provides a demographic breakdown, while the repeat purchase donut chart shows how customers are distributed across one-time, repeat, frequent and loyal purchasing groups.
 
-**Dashboard Preview:**
+**Interactive filters:** City, Gender and Customer Segment.
+
+**What it helps answer:** Which customer segments are most valuable, where are purchasing customers concentrated, and how does purchasing frequency differ across the customer base?
+
+**Dashboard Preview**
 
 ![Customer Analytics Dashboard](screenshots/customer-analytics-dashboard.png)
 
 ### 6.3 Marketing Campaign Dashboard
 
-**Business Objective:** Evaluate marketing campaign performance across channels, campaign types, objectives and target customer segments.
+**Purpose:** Examine how marketing campaigns perform across different channels, campaign types, objectives and target customer segments.
 
-**Implementation:**
-- KPI cards for total campaigns, marketing spend, customers reached, conversions, attributed revenue and average ROAS.
-- Marketing channel performance to compare attributed revenue across advertising and communication channels.
-- Campaign type performance to evaluate the contribution of promotional, seasonal, festive and other campaigns.
-- Campaign objective distribution to compare conversion contribution across marketing objectives.
-- Monthly marketing investment and returns using a combination chart.
-- Campaign-level performance table for detailed examination of individual campaigns.
+The dashboard begins with six KPIs covering total campaigns, marketing spend, customers reached, conversions, attributed revenue and average ROAS.
 
-**Interactive Features:** Marketing channel, campaign type, target segment and campaign start-month filters.
+The Marketing Channel Performance chart compares attributed revenue across channels such as Email, Instagram Ads, Facebook Ads, Google Ads and WhatsApp.
 
-**Business Value:** Helps stakeholders compare marketing efficiency, identify stronger-performing channels and campaign types, and examine the relationship between marketing expenditure and campaign-reported revenue.
+Campaign Type Performance provides a comparison of promotional, seasonal, festive and other campaign types. The Campaign Objective Distribution donut chart shows how conversions are distributed across marketing objectives.
 
-**Dashboard Preview:**
+A monthly investment and returns combination chart compares campaign spend with attributed revenue, while the campaign details table allows individual campaigns to be examined using their spend, impressions, clicks, conversions and ROAS.
+
+**Interactive filters:** Marketing Channel, Campaign Type, Target Segment and Campaign Start Month.
+
+**What it helps answer:** Which channels and campaign types perform better, how marketing investment compares with attributed revenue, and which individual campaigns stand out?
+
+**Dashboard Preview**
 
 ![Marketing Campaign Dashboard](screenshots/marketing-campaign-dashboard.png)
 
-*Marketing attribution note: Campaign attributed revenue is synthetic campaign-reported data and is not reconciled against order transactions. Monthly investment and return trends are grouped by campaign start month, not actual monthly revenue recognition.*
+*Note: Marketing attributed revenue is synthetic campaign-reported data and is not reconciled against actual order transactions. The monthly investment and returns chart groups campaigns by their start month rather than tracking revenue recognition by transaction date.*
 
-## 7. Key Business Results
+## 7. Key Results
 
-The simulated dataset produced the following illustrative metrics:
+The generated dataset produced the following illustrative business metrics:
 
 | Metric | Result |
 |---|---:|
@@ -233,7 +235,7 @@ The simulated dataset produced the following illustrative metrics:
 | Campaign Attributed Revenue | ₹10.86 Crore |
 | Average Campaign ROAS | 2.75x |
 
-These results demonstrate how operational retail data can be transformed into business metrics and analytical insights.
+These figures demonstrate how the different datasets can be transformed into useful business metrics, from tracking revenue and product performance to understanding customer value and marketing efficiency.
 
 ## 8. Repository Structure
 
@@ -256,17 +258,15 @@ fashion-retail-analytics-lakehouse/
 └── README.md
 ```
 
-## 9. Key Learning Outcomes
+## 9. What I Learned
 
-Through this project, I gained practical experience in:
+Building this project gave me practical experience working with Databricks beyond writing individual SQL queries.
 
-- Building a multi-layer lakehouse architecture using Databricks and Delta Lake.
-- Generating and processing synthetic retail datasets using PySpark.
-- Developing structured ETL transformations and validating business rules.
-- Creating analytical datasets using aggregations and customer segmentation.
-- Writing SQL queries for sales, customer, product, inventory and marketing analysis.
-- Designing interactive dashboards to communicate business performance.
-- Working with managed Delta tables and organising analytical workflows in Databricks.
+I worked through the process of generating datasets, organising them into a lakehouse architecture, transforming data using PySpark and Delta tables, and validating the results before using them for analysis.
+
+It also gave me an opportunity to apply SQL concepts to actual business questions, particularly around customer segmentation, cohort retention, repeat purchasing, inventory planning and marketing performance.
+
+Finally, building the dashboards helped me think about how analytical results should be presented to different stakeholders, rather than simply producing tables of numbers.
 
 ## 10. Project Information
 
@@ -276,4 +276,4 @@ Through this project, I gained practical experience in:
 **Architecture:** Bronze-Silver-Gold (Medallion Architecture)  
 **Author:** Yash Dubey
 
-*All business entities, customer records, transactions and performance metrics in this project are synthetic and intended solely for learning and portfolio demonstration.*
+*All customers, products, transactions, campaigns and business metrics are synthetically generated for learning and portfolio demonstration. They do not represent actual company data.*
