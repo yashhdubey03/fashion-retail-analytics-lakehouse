@@ -81,7 +81,7 @@ All business entities and figures are fictional and intended for analytical prac
 
 The data is organised using the Medallion Architecture, with separate Bronze, Silver and Gold layers. Each layer has a specific purpose, allowing raw datasets to be progressively transformed into reliable, business-ready information.
 
-![Fashion Retail Analytics Lakehouse Flow](screenshots/Fashion%20Retail%20Analytics%20Lakehouse%20Flow.png)
+![Fashion Retail Analytics Lakehouse Flow](06_screenshots/Fashion%20Retail%20Analytics%20Lakehouse%20Flow.png)
 
 ### Bronze Layer – Raw Data Storage
 
