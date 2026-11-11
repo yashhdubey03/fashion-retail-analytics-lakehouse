@@ -10,30 +10,40 @@ An end-to-end retail analytics project built using **Databricks, PySpark, Delta 
 
 The project explores how data from different areas of a retail business can be brought together, cleaned, transformed and analysed to understand business performance. It covers the complete journey from generating synthetic datasets and building a lakehouse architecture to writing analytical SQL queries and developing interactive dashboards.
 
+---
+
+## Table of Contents
+
+1. [Project Overview](#1-project-overview)
+2. [Technology Stack](#2-technology-stack)
+3. [Data Generation](#3-data-generation)
+4. [Lakehouse Implementation](#4-lakehouse-implementation)
+5. [SQL Analytics](#5-sql-analytics)
+6. [Interactive Dashboards](#6-interactive-dashboards)
+7. [Key Results](#7-key-results)
+8. [Repository Structure](#8-repository-structure)
+9. [What I Learned](#9-what-i-learned)
+10. [Project Information](#10-project-information)
+
+---
+
 ## 1. Project Overview
 
-NOVA THREADS is a fictional fashion retailer operating through a website and mobile application across Mumbai, Pune, Delhi and Bengaluru.
+NOVA THREADS is a fictional Indian fashion retailer operating through a website and mobile application across Mumbai, Pune, Delhi and Bengaluru.
 
-Like most retail businesses, its operations generate data across multiple areas, including customer registrations, product catalogues, inventory, orders and marketing campaigns. Looking at these datasets independently makes it difficult to understand the bigger picture.
+As the business grows, its operations generate data across several areas, including customer registrations, product catalogues, orders, warehouse inventory and marketing campaigns. Although each dataset provides information about a particular business function, analysing them together makes it possible to understand overall performance and identify patterns that might otherwise go unnoticed.
 
-The goal of this project was to bring these different datasets into one analytical environment and use them to answer practical business questions.
+The aim of this project was to simulate this retail environment and build an end-to-end analytics solution using Databricks. Starting with programmatically generated synthetic data, I developed a lakehouse workflow to clean, transform and analyse the datasets before presenting the results through interactive dashboards.
 
-Some of the questions explored include:
-- Which products, categories and brands contribute the most revenue?
-- How does sales performance change over time?
-- Which customer segments generate the highest revenue?
-- How frequently do customers return to make purchases?
-- Which marketing channels and campaign types perform better?
-- Which warehouses have products that need replenishment?
+The project explores five key areas of retail analytics:
 
-### What the project covers
+- **Sales Performance:** Revenue trends, order volumes and average order value.
+- **Product Analytics:** Category, brand and product-level revenue contribution.
+- **Customer Analytics:** RFM segmentation, customer value and repeat purchasing behaviour.
+- **Inventory Analytics:** Warehouse stock levels and replenishment requirements.
+- **Marketing Analytics:** Campaign performance, channel efficiency and return on ad spend.
 
-- Approximately 850,000 programmatically generated records across six datasets.
-- Bronze, Silver and Gold lakehouse architecture using Delta tables.
-- PySpark-based data cleaning, transformations and validation.
-- Customer segmentation using RFM analysis.
-- 10 analytical SQL queries covering different business areas.
-- Three interactive Databricks AI/BI dashboards.
+The final solution brings together approximately **850,000 synthetic records**, a three-layer lakehouse architecture, 10 analytical SQL queries and three interactive dashboards.
 
 ## 2. Technology Stack
 
