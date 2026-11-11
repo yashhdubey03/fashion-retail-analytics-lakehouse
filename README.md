@@ -179,7 +179,7 @@ Below the KPIs, the monthly revenue trend helps identify changes in sales over t
 
 **Dashboard Preview**
 
-![Executive Sales Dashboard](screenshots/executive-sales-dashboard.png)
+![Executive Sales Dashboard](06_screenshots/executive-sales-dashboard.png)
 
 ### 6.2 Customer Analytics Dashboard
 
@@ -197,7 +197,7 @@ The age distribution chart provides a demographic breakdown, while the repeat pu
 
 **Dashboard Preview**
 
-![Customer Analytics Dashboard](screenshots/customer-analytics-dashboard.png)
+![Customer Analytics Dashboard](06_screenshots/customer-analytics-dashboard.png)
 
 ### 6.3 Marketing Campaign Dashboard
 
@@ -217,7 +217,7 @@ A monthly investment and returns combination chart compares campaign spend with 
 
 **Dashboard Preview**
 
-![Marketing Campaign Dashboard](screenshots/marketing-campaign-dashboard.png)
+![Marketing Campaign Dashboard](06_screenshots/marketing-campaign-dashboard.png)
 
 *Note: Marketing attributed revenue is synthetic campaign-reported data and is not reconciled against actual order transactions. The monthly investment and returns chart groups campaigns by their start month rather than tracking revenue recognition by transaction date.*
 
