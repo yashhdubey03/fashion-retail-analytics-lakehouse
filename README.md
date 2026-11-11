@@ -81,16 +81,7 @@ All business entities and figures are fictional and intended for analytical prac
 
 The data is organised using the Medallion Architecture, with separate Bronze, Silver and Gold layers. Each layer has a specific purpose, allowing raw datasets to be progressively transformed into reliable, business-ready information.
 
-```mermaid
-flowchart TD
-    A["Programmatic Data Generation"] --> B["BRONZE LAYER"]
-    B --> C["SILVER LAYER"]
-    C --> D["GOLD LAYER"]
-    D --> E["Databricks SQL Analytics"]
-    E --> F["Executive Sales Dashboard"]
-    E --> G["Customer Analytics Dashboard"]
-    E --> H["Marketing Campaign Dashboard"]
-```
+![Fashion Retail Analytics Lakehouse Flow](screenshots/Fashion%20Retail%20Analytics%20Lakehouse%20Flow.png)
 
 ### Bronze Layer – Raw Data Storage
 
